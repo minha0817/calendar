@@ -1,6 +1,7 @@
-import React from "react";  
+import React from 'react'
+import "../style/day.css";
 
-export default function Day () {
+export default function Day() {
   return (
     <ul>
       <li>Sun</li>
