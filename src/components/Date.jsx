@@ -16,7 +16,7 @@ const getCalendarSize = (daysInMonth, firstDay) => {
 }
 
 export default function Date({ currentMonth }) {
-  // 3
+
   const firstDay =
     currentMonth.startOf('month').weekday === 7
       ? 0
@@ -25,6 +25,7 @@ export default function Date({ currentMonth }) {
   const lastDate = currentMonth.endOf('month').c.day
   const lastDateOfPrevMonth = currentMonth.minus({month: 1}).endOf('month').c.day;
   const daysInMonth = currentMonth.daysInMonth;
+  
   const calendarFiller = new Array(
     getCalendarSize(daysInMonth, firstDay),
   ).fill(null)
