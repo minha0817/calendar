@@ -7,8 +7,7 @@ import { useState } from "react";
 
 function App() {
   const [currentMonth, setCurrentMonth] = useState(DateTime.local());
-  console.log('currentMonth', currentMonth);
-  // button functions to setCurrentMonth
+
   const handlePrevMonth = () => {
     const prevMonth = currentMonth.minus({month: 1})
     setCurrentMonth(prevMonth);
@@ -19,7 +18,6 @@ function App() {
     setCurrentMonth(nextMonth);
   }
 
-  // pass button functions to Header
   return (
     <div className="App">
       <Header handleNextMonth={handleNextMonth} handlePrevMonth={handlePrevMonth} currentMonth={currentMonth}/>
@@ -31,8 +29,3 @@ function App() {
 
 export default App;
 
-// figure out how to start the calendar on the right day
-
-// figure out how to fill in last month calendar at the beginning AND at the end with next month
-
-// figure out previous month and next month

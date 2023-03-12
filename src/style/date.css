@@ -1,3 +1,13 @@
 .date li {
   border: 1px solid black;
 }
+
+.date__currentMonth {
+  font-weight: bold;
+}
+
+.date__notCurrentMonth {
+  color: grey;
+  background-color: lightgrey;
+  font-weight: bold;
+}
