@@ -7,20 +7,22 @@ import { useState } from "react";
 
 function App() {
   const [currentMonth, setCurrentMonth] = useState(DateTime.local());
-  
+  console.log('currentMonth', currentMonth);
   // button functions to setCurrentMonth
   const handlePrevMonth = () => {
-    setCurrentMonth()
+    const prevMonth = currentMonth.minus({month: 1})
+    setCurrentMonth(prevMonth);
   }
-  
-  const handleNextMonth = () => {
 
+  const handleNextMonth = () => {
+    const nextMonth = currentMonth.plus({month: 1})
+    setCurrentMonth(nextMonth);
   }
 
   // pass button functions to Header
   return (
     <div className="App">
-      <Header />
+      <Header handleNextMonth={handleNextMonth} handlePrevMonth={handlePrevMonth} currentMonth={currentMonth}/>
       <Day />
       <Date currentMonth={currentMonth} />
     </div>
