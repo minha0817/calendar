@@ -3,7 +3,7 @@ import "../style/day.css";
 
 export default function Day() {
   return (
-    <ul>
+    <ul className='day'>
       <li>Sun</li>
       <li>Mon</li>
       <li>Tue</li>

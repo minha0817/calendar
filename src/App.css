@@ -1,11 +1,8 @@
 .App {
   text-align: center;
   margin: auto;
+  min-width: 1200px;
 }
-
-/* body {
-  max-width: 1200px;
-} */
 
 button {
   all: unset;
@@ -15,4 +12,15 @@ button {
 
 ul {
   list-style: none;
+  display: flex;
+  margin: 0 50px;
+  flex-wrap: wrap;
+  padding-left: 0;
+  justify-content: center;
+  /* border: 1px solid black; */
+}
+
+li {
+  padding: 40px 30px;
+  width: calc(60% / 7);
 }

@@ -1,11 +1,11 @@
-ul {
+/* .day {
   display: flex;
   justify-content: space-between;
   padding-left: 0;
   margin: 0 150px;
-}
+} */
 
-li {
-  font-size: large;
+.day li {
+  font-size: x-large;
 }
 
