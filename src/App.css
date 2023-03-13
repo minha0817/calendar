@@ -21,5 +21,6 @@ ul {
 
 li {
   padding: 30px 30px;
-  width: calc(60% / 7);
+  width: calc(100% / 7);
+  box-sizing: border-box;
 }

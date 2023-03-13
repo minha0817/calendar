@@ -25,7 +25,7 @@ export default function Date({ currentMonth }) {
   const lastDate = currentMonth.endOf('month').c.day
   const lastDateOfPrevMonth = currentMonth.minus({month: 1}).endOf('month').c.day;
   const daysInMonth = currentMonth.daysInMonth;
-  
+
   const calendarFiller = new Array(
     getCalendarSize(daysInMonth, firstDay),
   ).fill(null)
@@ -62,7 +62,7 @@ export default function Date({ currentMonth }) {
     <ul className="date">
       {calendarFiller.map((date) => {
         return (
-          <li className={date && date.isCurrentMonth === true ? "date__currentMonth" : "date__notCurrentMonth"}>
+          <li className={date && date.isCurrentMonth === true ? "date date__currentMonth" : "date date__notCurrentMonth"}>
             {date && <div>{date.number}</div>}
           </li>
         )
