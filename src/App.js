@@ -7,6 +7,7 @@ import { useState } from "react";
 
 function App() {
   const [currentMonth, setCurrentMonth] = useState(DateTime.local());
+  const [openHabitTracker, setOpenHabitTracker] = useState(false);
 
   const handlePrevMonth = () => {
     const prevMonth = currentMonth.minus({month: 1})
@@ -22,7 +23,7 @@ function App() {
     <div className="App">
       <Header handleNextMonth={handleNextMonth} handlePrevMonth={handlePrevMonth} currentMonth={currentMonth}/>
       <Day />
-      <Date currentMonth={currentMonth} />
+      <Date currentMonth={currentMonth}  openHabitTracker={openHabitTracker} setOpenHabitTracker={setOpenHabitTracker}/>
     </div>
   );
 }

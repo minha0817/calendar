@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import '../style/date.css'
-import Modal from './Modal'
+import React, { useState } from 'react';
+import '../style/date.css';
+import Modal from './Modal';
 
 const getCalendarSize = (daysInMonth, firstDay) => {
   const test = daysInMonth + firstDay
@@ -16,8 +16,7 @@ const getCalendarSize = (daysInMonth, firstDay) => {
   return 28
 }
 
-export default function Date({ currentMonth }) {
-  const [openHabitTracker, setOpenHabitTracker] = useState(false)
+export default function Date({ currentMonth,  openHabitTracker, setOpenHabitTracker }) {
 
   const firstDay =
     currentMonth.startOf('month').weekday === 7
@@ -66,9 +65,10 @@ export default function Date({ currentMonth }) {
 
   return (
     <ul className="date">
-      {calendarFiller.map((date) => {
+      {calendarFiller.map((date, index) => {
         return (
           <li
+            key={index}
             className={
               date && date.isCurrentMonth === true
                 ? 'date date__currentMonth'
@@ -83,7 +83,7 @@ export default function Date({ currentMonth }) {
           </li>
         )
       })}
-      {openHabitTracker && <Modal />}
+      {openHabitTracker && <Modal setOpenHabitTracker={setOpenHabitTracker}/>}
     </ul>
   )
 }
