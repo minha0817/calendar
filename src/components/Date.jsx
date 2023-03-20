@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../style/date.css'
+import Modal from './Modal'
 
 const getCalendarSize = (daysInMonth, firstDay) => {
   const test = daysInMonth + firstDay
@@ -16,6 +17,7 @@ const getCalendarSize = (daysInMonth, firstDay) => {
 }
 
 export default function Date({ currentMonth }) {
+  const [openHabitTracker, setOpenHabitTracker] = useState(false)
 
   const firstDay =
     currentMonth.startOf('month').weekday === 7
@@ -23,20 +25,20 @@ export default function Date({ currentMonth }) {
       : currentMonth.startOf('month').weekday
 
   const lastDate = currentMonth.endOf('month').c.day
-  const lastDateOfPrevMonth = currentMonth.minus({month: 1}).endOf('month').c.day;
-  const daysInMonth = currentMonth.daysInMonth;
+  const lastDateOfPrevMonth = currentMonth.minus({ month: 1 }).endOf('month').c
+    .day
+  const daysInMonth = currentMonth.daysInMonth
 
-  const calendarFiller = new Array(
-    getCalendarSize(daysInMonth, firstDay),
-  ).fill(null)
+  const calendarFiller = new Array(getCalendarSize(daysInMonth, firstDay)).fill(
+    null,
+  )
 
   // Assign proper date to calendarFiller index
   for (let i = 0; i < lastDate; i++) {
-    
-    if(i < firstDay) {
+    if (i < firstDay) {
       calendarFiller[i] = {
         number: lastDateOfPrevMonth - firstDay + 1 + i,
-        isCurrentMonth: false
+        isCurrentMonth: false,
       }
     }
 
@@ -47,26 +49,41 @@ export default function Date({ currentMonth }) {
     }
   }
 
-  let counter = 0;
-  for(let i = 0; i < calendarFiller.length; i++){
-    if(calendarFiller[i] === null ){
-      counter++;
+  let counter = 0
+  for (let i = 0; i < calendarFiller.length; i++) {
+    if (calendarFiller[i] === null) {
+      counter++
       calendarFiller[i] = {
         number: counter,
-        isCurrentMonth: false
+        isCurrentMonth: false,
       }
     }
+  }
+
+  const handleClickDate = () => {
+    setOpenHabitTracker(!openHabitTracker)
   }
 
   return (
     <ul className="date">
       {calendarFiller.map((date) => {
         return (
-          <li className={date && date.isCurrentMonth === true ? "date date__currentMonth" : "date date__notCurrentMonth"}>
-            {date && <button className='date__number'>{date.number}</button>}
+          <li
+            className={
+              date && date.isCurrentMonth === true
+                ? 'date date__currentMonth'
+                : 'date date__notCurrentMonth'
+            }
+          >
+            {date && (
+              <button className="date__number" onClick={handleClickDate}>
+                {date.number}
+              </button>
+            )}
           </li>
         )
       })}
+      {openHabitTracker && <Modal />}
     </ul>
   )
 }
