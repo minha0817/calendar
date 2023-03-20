@@ -63,7 +63,7 @@ export default function Date({ currentMonth }) {
       {calendarFiller.map((date) => {
         return (
           <li className={date && date.isCurrentMonth === true ? "date date__currentMonth" : "date date__notCurrentMonth"}>
-            {date && <div>{date.number}</div>}
+            {date && <button className='date__number'>{date.number}</button>}
           </li>
         )
       })}

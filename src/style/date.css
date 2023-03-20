@@ -2,6 +2,10 @@
   border: 1px solid black;
 }
 
+.date__number {
+  font-size: x-large;
+}
+
 .date__currentMonth {
   font-weight: bold;
 }
