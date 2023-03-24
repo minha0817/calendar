@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import '../style/date.css';
 import Modal from './Modal';
+
 
 const getCalendarSize = (daysInMonth, firstDay) => {
   const test = daysInMonth + firstDay
@@ -16,7 +17,15 @@ const getCalendarSize = (daysInMonth, firstDay) => {
   return 28
 }
 
-export default function Date({ currentMonth,  openHabitTracker, setOpenHabitTracker }) {
+export default function Date({
+  currentMonth,
+  openHabitTracker,
+  setOpenHabitTracker,
+}) {
+  // const habitList = ['Coding', 'Work out']
+  const habitList = {1: {name:"Coding", status:true}, 2: {name:"Drinking", status:false}};
+  const [habit, setHabitList] = useState(habitList);
+  const [habitStatus, setHabitStatus] = useState(false);
 
   const firstDay =
     currentMonth.startOf('month').weekday === 7
@@ -63,6 +72,10 @@ export default function Date({ currentMonth,  openHabitTracker, setOpenHabitTrac
     setOpenHabitTracker(!openHabitTracker)
   }
 
+  const handleClickHabit = () => {
+    setHabitStatus(!habitStatus);
+  }
+
   return (
     <ul className="date">
       {calendarFiller.map((date, index) => {
@@ -70,20 +83,36 @@ export default function Date({ currentMonth,  openHabitTracker, setOpenHabitTrac
           <li
             key={index}
             className={
-              date && date.isCurrentMonth === true
+              date && date.isCurrentMonth
                 ? 'date date__currentMonth'
                 : 'date date__notCurrentMonth'
             }
           >
             {date && (
-              <button className="date__number" onClick={handleClickDate}>
+              <button className="date__button" onClick={handleClickDate}>
                 {date.number}
               </button>
             )}
+            <div className="date__button__habits">
+              {Object.values(habit).map((habit, index) => {
+                return (
+                  <button key={index} className={habit && habit.status ? "date__button__habit completed" : "date__button__habit active"} onClick={handleClickHabit}>
+                    {habit.name}
+                  </button>
+                )
+              })}
+            </div>
           </li>
         )
       })}
-      {openHabitTracker && <Modal setOpenHabitTracker={setOpenHabitTracker}/>}
+      {openHabitTracker && (
+        <Modal
+          habit={habit}
+          // habitStatus={habitStatus}
+          setHabitList={setHabitList}
+          setOpenHabitTracker={setOpenHabitTracker}
+        />
+      )}
     </ul>
   )
 }

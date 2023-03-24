@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import '../style/modal.css';
 import {AiOutlineClose} from 'react-icons/ai';
+import { v4 as uuidv4 } from 'uuid';
 
-export default function Modal({ setOpenHabitTracker}) {
-  const habitList = ['Coding', 'Work out', 'Reading a book']
+export default function Modal({ habit, setHabitList, setOpenHabitTracker}) {
   const [input, setInput] = useState('')
-  const [habit, setHabitList] = useState(habitList)
+
 
   const addHabitList = (input) => {
+
     setHabitList((prev) => {
-      const updatedHabitList = [...prev, input]
+      
+      const id = uuidv4();
+      const updatedHabitList = {...prev, [id]: input} 
       return updatedHabitList
     })
   }
@@ -18,8 +21,9 @@ export default function Modal({ setOpenHabitTracker}) {
     event.preventDefault()
 
     if (input.length > 0) {
-      addHabitList(input)
+      addHabitList({name: input, status: false})
     }
+
     setInput('')
   }
 
@@ -33,10 +37,10 @@ export default function Modal({ setOpenHabitTracker}) {
         <h2 className="modal__title">Habit tracker</h2>
         <AiOutlineClose onClick={handleClickClose} className='modal__close'/>
       </div>
-      {habit.map((habit, index) => {
+      {Object.values(habit).map((habit, index) => {
         return (
           <li className="modal__list" key={index}>
-            {habit}
+            {habit.name}
           </li>
         )
       })}

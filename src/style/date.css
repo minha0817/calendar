@@ -1,9 +1,30 @@
 .date {
   border: 1px solid black;
+  padding: 0;
 }
 
-.date__number {
+.date__button {
   font-size: x-large;
+  margin: 5px 50px 10px 50px;
+}
+
+.date__button__habits {
+  display: flex;
+  flex-direction: column;
+}
+
+.date__button__habit {
+  margin: 10px 50px;
+  padding: 5px;
+  border-radius: 12px;
+}
+
+.completed {
+  background-color: yellowgreen;
+}
+
+.active {
+  background-color: coral;
 }
 
 .date__currentMonth {
@@ -14,4 +35,10 @@
   color: grey;
   background-color: lightgrey;
   font-weight: bold;
+  opacity: 0.7;
+}
+
+.date__currentMonth
+.date__button__habit {
+  color: white;
 }
