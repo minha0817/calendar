@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
-import '../style/date.css'
-import Modal from './Modal'
+import React, { useState } from 'react';
+import '../style/date.css';
+import Modal from './Modal';
+import axios from 'axios';
 
 const getCalendarSize = (daysInMonth, firstDay) => {
   const test = daysInMonth + firstDay
@@ -75,34 +76,49 @@ export default function Date({
     }
   }
 
-  const handleClickDate = () => {
+  const sendHabitList = ( ) => {
+    const post = {habitList}
+
+    fetch("http://localhost:3500", {
+      method: "post",
+      headers: {
+        "content-type" : "application/json",
+      },
+      body: JSON.stringify(post)
+    })
+    
+  }
+
+  const handleClickDate = (date) => {
     setOpenHabitTracker(!openHabitTracker)
+    sendHabitList();
+    console.log('date', date);
   }
 
-  const handleClickHabit = (habit, date) => {
+  // const handleClickHabit = (habit, date) => {
 
-    const clonedHabitList = { ...habitList }
-    const targetHabit = clonedHabitList[habit.id];
+  //   const clonedHabitList = { ...habitList }
+  //   const targetHabit = clonedHabitList[habit.id];
 
-    console.log(targetHabit, "target habit")
-    console.log('clonedHabitLIst', clonedHabitList);
-    console.log("habit", habit);
-    // find correct obejct inside clonedHAbitList
+  //   console.log(targetHabit, "target habit")
+  //   console.log('clonedHabitLIst', clonedHabitList);
+  //   console.log("habit", habit);
+  //   // find correct obejct inside clonedHAbitList
 
-    // make changes to clonedHabitLIst
+  //   // make changes to clonedHabitLIst
 
-    // use clonedHabitList to setState
-    const indexOfDate = habit.completed[date.year][date.month].indexOf(
-      date.number,
-    )
-    if (indexOfDate > -1) {
-      //있다
-      habit.completed[date.year][date.month].splice(indexOfDate, 1)
-    } else {
-      //없다
-      habit.completed[date.year][date.month].push(date.number)
-    }
-  }
+  //   // use clonedHabitList to setState
+  //   const indexOfDate = habit.completed[date.year][date.month].indexOf(
+  //     date.number,
+  //   )
+  //   if (indexOfDate > -1) {
+  //     //있다
+  //     habit.completed[date.year][date.month].splice(indexOfDate, 1)
+  //   } else {
+  //     //없다
+  //     habit.completed[date.year][date.month].push(date.number)
+  //   }
+  // }
 
   return (
     <ul className="date">
@@ -117,7 +133,7 @@ export default function Date({
             }
           >
             {date && (
-              <button className="date__button" onClick={handleClickDate}>
+              <button className="date__button" onClick={() => handleClickDate(date)}>
                 {date.number}
               </button>
             )}
@@ -132,7 +148,7 @@ export default function Date({
                         : 'date__button__habit active'
                     }
                     onClick={() => {
-                      handleClickHabit(habit, date)
+                      // handleClickHabit(habit, date)
                     }}
                   >
                     {habit.name}
