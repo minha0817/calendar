@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import '../style/date.css';
-import Modal from './Modal';
-
+import '../style/date.css'
+import Modal from './Modal'
 
 const getCalendarSize = (daysInMonth, firstDay) => {
   const test = daysInMonth + firstDay
@@ -22,10 +21,11 @@ export default function Date({
   openHabitTracker,
   setOpenHabitTracker,
 }) {
-  // const habitList = ['Coding', 'Work out']
-  const habitList = {1: {name:"Coding", status:true}, 2: {name:"Drinking", status:false}};
-  const [habit, setHabitList] = useState(habitList);
-  const [habitStatus, setHabitStatus] = useState(false);
+  const initialHabitList = {
+    1: { id:1, name: 'Coding', completed: { 2023: { 3: [1, 4, 6, 12, 22, 25] } } },
+    2: { id:2, name: 'Drinking', completed: { 2023: { 3: [1, 3, 5, 10, 22, 26] } } },
+  }
+  const [habitList, setHabitList] = useState(initialHabitList)
 
   const firstDay =
     currentMonth.startOf('month').weekday === 7
@@ -47,13 +47,17 @@ export default function Date({
       calendarFiller[i] = {
         number: lastDateOfPrevMonth - firstDay + 1 + i,
         isCurrentMonth: false,
+        month: currentMonth.c.month - 1,
+        //Fix this error later!!
+        year: currentMonth.c.year,
       }
     }
 
-    //For future styling, added isCurrentMonth value.
     calendarFiller[i + firstDay] = {
       number: i + 1,
       isCurrentMonth: true,
+      month: currentMonth.c.month,
+      year: currentMonth.c.year,
     }
   }
 
@@ -64,6 +68,9 @@ export default function Date({
       calendarFiller[i] = {
         number: counter,
         isCurrentMonth: false,
+        month: currentMonth.c.month + 1,
+        //Fix this error later!!
+        year: currentMonth.c.year,
       }
     }
   }
@@ -72,8 +79,29 @@ export default function Date({
     setOpenHabitTracker(!openHabitTracker)
   }
 
-  const handleClickHabit = () => {
-    setHabitStatus(!habitStatus);
+  const handleClickHabit = (habit, date) => {
+
+    const clonedHabitList = { ...habitList }
+    const targetHabit = clonedHabitList[habit.id];
+
+    console.log(targetHabit, "target habit")
+    console.log('clonedHabitLIst', clonedHabitList);
+    console.log("habit", habit);
+    // find correct obejct inside clonedHAbitList
+
+    // make changes to clonedHabitLIst
+
+    // use clonedHabitList to setState
+    const indexOfDate = habit.completed[date.year][date.month].indexOf(
+      date.number,
+    )
+    if (indexOfDate > -1) {
+      //있다
+      habit.completed[date.year][date.month].splice(indexOfDate, 1)
+    } else {
+      //없다
+      habit.completed[date.year][date.month].push(date.number)
+    }
   }
 
   return (
@@ -94,9 +122,19 @@ export default function Date({
               </button>
             )}
             <div className="date__button__habits">
-              {Object.values(habit).map((habit, index) => {
+              {Object.values(habitList).map((habit, index) => {
                 return (
-                  <button key={index} className={habit && habit.status ? "date__button__habit completed" : "date__button__habit active"} onClick={handleClickHabit}>
+                  <button
+                    key={index}
+                    className={
+                      habit.status
+                        ? 'date__button__habit completed'
+                        : 'date__button__habit active'
+                    }
+                    onClick={() => {
+                      handleClickHabit(habit, date)
+                    }}
+                  >
                     {habit.name}
                   </button>
                 )
@@ -107,7 +145,7 @@ export default function Date({
       })}
       {openHabitTracker && (
         <Modal
-          habit={habit}
+          habitList={habitList}
           // habitStatus={habitStatus}
           setHabitList={setHabitList}
           setOpenHabitTracker={setOpenHabitTracker}
@@ -116,3 +154,5 @@ export default function Date({
     </ul>
   )
 }
+
+//1. 데이터 스트럭쳐를 날짜 포함되게 바꿔야함
