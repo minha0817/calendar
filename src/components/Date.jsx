@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import '../style/date.css';
-import Modal from './Modal';
-import axios from 'axios';
+import axios from 'axios'
+import React, { useState } from 'react'
+import '../style/date.css'
+import Modal from './Modal'
 
 const getCalendarSize = (daysInMonth, firstDay) => {
   const test = daysInMonth + firstDay
@@ -23,8 +23,16 @@ export default function Date({
   setOpenHabitTracker,
 }) {
   const initialHabitList = {
-    1: { id:1, name: 'Coding', completed: { 2023: { 3: [1, 4, 6, 12, 22, 25] } } },
-    2: { id:2, name: 'Drinking', completed: { 2023: { 3: [1, 3, 5, 10, 22, 26] } } },
+    1: {
+      id: 1,
+      name: 'Coding',
+      completed: { 2023: { 3: [1, 4, 6, 12, 22, 25] } },
+    },
+    2: {
+      id: 2,
+      name: 'Drinking',
+      completed: { 2023: { 3: [1, 3, 5, 10, 22, 26] } },
+    },
   }
   const [habitList, setHabitList] = useState(initialHabitList)
 
@@ -76,23 +84,20 @@ export default function Date({
     }
   }
 
-  const sendHabitList = ( ) => {
-    const post = {habitList}
-
-    fetch("http://localhost:3500", {
-      method: "post",
-      headers: {
-        "content-type" : "application/json",
-      },
-      body: JSON.stringify(post)
-    })
-    
+  const sendHabitList = (date) => {
+    const post = `${date.month}${date.number}` //string
+    console.log('post', post)
+    axios
+      .post('http://localhost:3500/', {
+        post,
+      })
+      .then((response) => console.log(response))
+      .catch((error) => console.log('error', error))
   }
 
   const handleClickDate = (date) => {
     setOpenHabitTracker(!openHabitTracker)
-    sendHabitList();
-    console.log('date', date);
+    sendHabitList(date)
   }
 
   // const handleClickHabit = (habit, date) => {
@@ -133,7 +138,10 @@ export default function Date({
             }
           >
             {date && (
-              <button className="date__button" onClick={() => handleClickDate(date)}>
+              <button
+                className="date__button"
+                onClick={() => handleClickDate(date)}
+              >
                 {date.number}
               </button>
             )}
