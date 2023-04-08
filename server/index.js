@@ -15,20 +15,20 @@ app.get('/', (req, res) => {
 
 app.post("/", (req,res) => {
   const date = req.body.clickedDate
-  console.log('req.body:', req.body);
-  // const data = fs.readFileSync('./data/data.json', 'utf8')
-  // console.log(data);
-  // const dataObj = JSON.parse(data);
+  const habit = req.body.input 
 
-  // if(dataObj[date]){
-  //   dataObj[date]++;
-  // }else {
-  //   dataObj[date] = 1
-  // }
+  const data = fs.readFileSync('./data/data.json', 'utf8')
+  const dataObj = JSON.parse(data);
 
-  // console.log(dataObj)
+  if(dataObj[date]){
+    dataObj[date].push(habit)
+  }else {
+    dataObj[date] = [habit]
+  }
 
-  // fs.writeFileSync('data/data.json', JSON.stringify(dataObj, null, 2), 'utf8')
+  console.log("dataObj:", dataObj)
+
+  fs.writeFileSync('data/data.json', JSON.stringify(dataObj, null, 2), 'utf8')
 })
 
 app.listen(port, () => {
