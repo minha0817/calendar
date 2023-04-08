@@ -1,7 +1,7 @@
-import axios from 'axios'
 import React, { useState } from 'react'
 import '../style/date.css'
 import Modal from './Modal'
+import axios from 'axios';
 
 const getCalendarSize = (daysInMonth, firstDay) => {
   const test = daysInMonth + firstDay
@@ -22,20 +22,22 @@ export default function Date({
   openHabitTracker,
   setOpenHabitTracker,
 }) {
-  const initialHabitList = {
-    1: {
-      id: 1,
-      name: 'Coding',
-      completed: { 2023: { 3: [1, 4, 6, 12, 22, 25] } },
-    },
-    2: {
-      id: 2,
-      name: 'Drinking',
-      completed: { 2023: { 3: [1, 3, 5, 10, 22, 26] } },
-    },
-  }
-  const [habitList, setHabitList] = useState(initialHabitList)
 
+
+  const initialHabitList = {
+    // 1: {
+    //   id: 1,
+    //   name: 'Coding',
+    //   completed: { 2023: { 3: [1, 4, 6, 12, 22, 25] } },
+    // },
+    // 2: {
+    //   id: 2,
+    //   name: 'Drinking',
+    //   completed: { 2023: { 3: [1, 3, 5, 10, 22, 26] } },
+    // },
+  }
+
+  const [clickedDate, setClickedDate] = useState("");
   const firstDay =
     currentMonth.startOf('month').weekday === 7
       ? 0
@@ -84,20 +86,9 @@ export default function Date({
     }
   }
 
-  const sendHabitList = (date) => {
-    const post = `${date.month}${date.number}` //string
-    console.log('post', post)
-    axios
-      .post('http://localhost:3500/', {
-        post,
-      })
-      .then((response) => console.log(response))
-      .catch((error) => console.log('error', error))
-  }
-
   const handleClickDate = (date) => {
     setOpenHabitTracker(!openHabitTracker)
-    sendHabitList(date)
+    setClickedDate(`${date.month}${date.number}`)
   }
 
   // const handleClickHabit = (habit, date) => {
@@ -145,7 +136,8 @@ export default function Date({
                 {date.number}
               </button>
             )}
-            <div className="date__button__habits">
+            {/* habit들이 달력에 출력되는 부분  */}
+            {/* <div className="date__button__habits">
               {Object.values(habitList).map((habit, index) => {
                 return (
                   <button
@@ -163,15 +155,13 @@ export default function Date({
                   </button>
                 )
               })}
-            </div>
+            </div> */}
           </li>
         )
       })}
       {openHabitTracker && (
         <Modal
-          habitList={habitList}
-          // habitStatus={habitStatus}
-          setHabitList={setHabitList}
+          clickedDate={clickedDate}
           setOpenHabitTracker={setOpenHabitTracker}
         />
       )}
@@ -179,4 +169,3 @@ export default function Date({
   )
 }
 
-//1. 데이터 스트럭쳐를 날짜 포함되게 바꿔야함

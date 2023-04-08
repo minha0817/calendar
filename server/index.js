@@ -14,35 +14,24 @@ app.get('/', (req, res) => {
 })
 
 app.post("/", (req,res) => {
-  
-  let dataObj = {}
-  const date = req.body.post
+  const date = req.body.clickedDate
+  console.log('req.body:', req.body);
+  // const data = fs.readFileSync('./data/data.json', 'utf8')
+  // console.log(data);
+  // const dataObj = JSON.parse(data);
 
-  fs.readFile('data/data.json', 'utf8', (err, data) => {
-    // console.log('datasdfsd', JSON.parse(data)[date]);
-    //update dataobj
-    console.log('1. readfile data', data);
-    dataObj = {...{data}}
-    console.log('dataObj in readfile', dataObj);
-  })
+  // if(dataObj[date]){
+  //   dataObj[date]++;
+  // }else {
+  //   dataObj[date] = 1
+  // }
 
-  if(dataObj[date]){
-    dataObj[date]++;
-  }else {
-    dataObj[date] = 1
-  }
+  // console.log(dataObj)
 
-  console.log(dataObj)
-
-  fs.writeFile('data/data.json', JSON.stringify(dataObj), (err) => {
-    if(err) {
-      throw err;
-    }
-  })
+  // fs.writeFileSync('data/data.json', JSON.stringify(dataObj, null, 2), 'utf8')
 })
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
 
-//readFile 

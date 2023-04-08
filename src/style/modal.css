@@ -12,12 +12,13 @@
   display: flex;
   justify-content: center;
   position: relative;
+  flex-direction: column;
 }
 
 .modal__close {
   position: relative;
-  left: 3.7rem;
-  top: 1.4rem;
+  left: 18rem;
+  top: -5rem;
 }
 
 .modal__list {
@@ -50,4 +51,8 @@
   padding: 0.5rem;
   margin: 1.5rem;
   box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.06);
+}
+
+.modal__date {
+  margin:auto;
 }
