@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import '../style/date.css'
 import Modal from './Modal'
 import axios from 'axios';
@@ -22,6 +22,15 @@ export default function Date({
   openHabitTracker,
   setOpenHabitTracker,
 }) {
+  const [data, setData] = useState({});
+
+  useEffect(() => {
+    axios.get('/db/data.json')
+      .then((res) => {
+        setData(res.data)
+      })
+      .catch((err) => console.log(err))
+  },[])
 
 
   const initialHabitList = {
@@ -87,7 +96,7 @@ export default function Date({
   }
 
   const handleClickDate = (date) => {
-    setOpenHabitTracker(!openHabitTracker)
+    setOpenHabitTracker(true)
     setClickedDate(`${date.month}${date.number}`)
   }
 
@@ -163,6 +172,7 @@ export default function Date({
         <Modal
           clickedDate={clickedDate}
           setOpenHabitTracker={setOpenHabitTracker}
+          habitList={data[clickedDate]}
         />
       )}
     </ul>
