@@ -28,7 +28,8 @@ app.post("/", (req,res) => {
 
   console.log("dataObj:", dataObj)
 
-  fs.writeFileSync('./public/db/data.json', JSON.stringify(dataObj, null, 2), 'utf8')
+  // fs.writeFileSync('./public/db/data.json', JSON.stringify(dataObj, null, 2), 'utf8')
+  res.send("hi");
 })
 
 app.listen(port, () => {

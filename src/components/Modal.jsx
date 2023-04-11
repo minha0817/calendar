@@ -7,7 +7,6 @@ export default function Modal({ setOpenHabitTracker, clickedDate, habitList }) {
   const [input, setInput] = useState('')
 
   const handleClickAdd = (event) => {
-    
     event.preventDefault()
 
     if (input.length > 0) {
@@ -41,7 +40,7 @@ export default function Modal({ setOpenHabitTracker, clickedDate, habitList }) {
             return <li key={index}>{habit}</li>
           })}
       </div>
-      <form className="modal__form">
+      <form className="modal__form" onSubmit={handleClickAdd}>
         <input
           className="modal__input"
           name="Add habits"
